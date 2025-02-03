@@ -15,7 +15,7 @@ services:
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
       INTERNAL_API_KEY: ${INTERNAL_API_KEY}
-      BUDIBASE_ENVIRONMENT: ${BUDIBASE_ENVIRONMENT}
+      BUDIBASE_ENVIRONMENT: "production"
       PORT: 4002
       API_ENCRYPTION_KEY: ${API_ENCRYPTION_KEY}
       JWT_SECRET: ${JWT_SECRET}
@@ -23,8 +23,8 @@ services:
       ENABLE_ANALYTICS: "true"
       REDIS_URL: redis-service:6379
       REDIS_PASSWORD: ${REDIS_PASSWORD}
-      BB_ADMIN_USER_EMAIL: ${BB_ADMIN_USER_EMAIL}
-      BB_ADMIN_USER_PASSWORD: ${BB_ADMIN_USER_PASSWORD}
+      BB_ADMIN_USER_EMAIL: "test@test.com"
+      BB_ADMIN_USER_PASSWORD: "A1d3g5j7!280795"
       PLUGINS_DIR: ${PLUGINS_DIR}
       OFFLINE_MODE: ${OFFLINE_MODE:-}
     depends_on:
@@ -101,8 +101,13 @@ services:
       - COUCHDB_PASSWORD=${COUCH_DB_PASSWORD}
       - COUCHDB_USER=${COUCH_DB_USER}
       - TARGETBUILD=docker-compose
-    volumes:
-      - couchdb3_data:/opt/couchdb/data
+volumes:
+   couchdb3_data:
+    driver: local
+  minio_data:
+    driver: local
+  redis_data:
+    driver: local
 
   redis-service:
     restart: unless-stopped
